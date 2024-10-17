@@ -4,7 +4,7 @@ import argparse
 
 
 def get_pods(namespace):
-    """Получаем список подов в указанном namespace."""
+    """Get the list of pods in the specified namespace."""
     try:
         pods = subprocess.check_output(
             [
@@ -19,12 +19,12 @@ def get_pods(namespace):
         )
         return pods.decode("utf-8").split()
     except subprocess.CalledProcessError as e:
-        print(f"Ошибка при выполнении команды kubectl: {e}")
+        print(f"Error executing kubectl command: {e}")
         return []
 
 
 def get_containers(pod_name, namespace):
-    """Получаем список контейнеров в поде."""
+    """Get the list of containers in the pod."""
     try:
         containers = subprocess.check_output(
             [
@@ -40,12 +40,12 @@ def get_containers(pod_name, namespace):
         )
         return containers.decode("utf-8").split()
     except subprocess.CalledProcessError as e:
-        print(f"Ошибка при получении контейнеров пода {pod_name}: {e}")
+        print(f"Error getting containers for pod {pod_name}: {e}")
         return []
 
 
 def save_logs(pod_name, container_name, namespace, logs_dir):
-    """Сохраняем логи контейнера в файл."""
+    """Save the logs of the container to a file."""
     try:
         os.makedirs(logs_dir, exist_ok=True)
         log_file = os.path.join(logs_dir, f"{pod_name}_{container_name}.log")
@@ -55,37 +55,35 @@ def save_logs(pod_name, container_name, namespace, logs_dir):
                 stdout=f,
             )
         print(
-            f"Логи контейнера {container_name} пода {pod_name} сохранены в {log_file}"
+            f"Logs for container {container_name} in pod {pod_name} saved to {log_file}"
         )
     except subprocess.CalledProcessError as e:
         print(
-            f"Ошибка при получении логов контейнера {container_name} пода {pod_name}: {e}"
+            f"Error getting logs for container {container_name} in pod {pod_name}: {e}"
         )
 
 
 def main(namespace, logs_dir="logs"):
     pods = get_pods(namespace)
     if not pods:
-        print("Подов не найдено.")
+        print("No pods found.")
         return
 
     for pod_name in pods:
         containers = get_containers(pod_name, namespace)
         if not containers:
-            print(f"Контейнеров не найдено в поде {pod_name}.")
+            print(f"No containers found in pod {pod_name}.")
             continue
         for container_name in containers:
             save_logs(pod_name, container_name, namespace, logs_dir)
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Сбор логов подов Kubernetes.")
+    parser = argparse.ArgumentParser(description="Collect logs from Kubernetes pods.")
     parser.add_argument(
-        "--namespace", required=True, help="Имя неймспейса в Kubernetes."
+        "--namespace", required=True, help="Name of the Kubernetes namespace."
     )
-    parser.add_argument(
-        "--logs-dir", default="logs", help="Директория для сохранения логов."
-    )
+    parser.add_argument("--logs-dir", default="logs", help="Directory to save logs.")
 
     args = parser.parse_args()
     main(namespace=args.namespace, logs_dir=args.logs_dir)
