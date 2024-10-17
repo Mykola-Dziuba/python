@@ -66,3 +66,14 @@ if __name__ == "__main__":
 
     # Запускаем основную функцию с переданными аргументами.
     main(namespace=args.namespace, logs_dir=args.logs_dir)
+
+
+error: a container name must be specified for pod gorm-pom-config-nft01-a-1-66f4d67b6f-szrql, choose one of: [gorm-pom-config-nft01-service gorm-pom-config-nft01]
+Логи пода gorm-pom-config-nft01-a-1-66f4d67b6f-szrql сохранены в ./log/gorm-pom-config-nft01-a-1-66f4d67b6f-szrql.log
+error: a container name must be specified for pod gorm-pom-ui-nft01-a-1-99bb78f77-584bk, choose one of: [gorm-pom-ui-nft01-service gorm-pom-ui-nft01]
+Логи пода gorm-pom-ui-nft01-a-1-99bb78f77-584bk сохранены в ./log/gorm-pom-ui-nft01-a-1-99bb78f77-584bk.log
+error: a container name must be specified for pod gorm-pom-ui-nft01-b-1-796c9d887b-p4b62, choose one of: [gorm-pom-ui-nft01-service gorm-pom-ui-nft01]
+Логи пода gorm-pom-ui-nft01-b-1-796c9d887b-p4b62 сохранены в ./log/gorm-pom-ui-nft01-b-1-796c9d887b-p4b62.log
+
+
+
