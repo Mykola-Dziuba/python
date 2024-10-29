@@ -1,0 +1,1 @@
+ERROR: failed to solve: python:3.9-slim: failed to resolve source metadata for docker.io/library/python:3.9-slim: failed to copy: httpReadSeeker: failed open: server message: insufficient_scope: authorization failed
