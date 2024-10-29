@@ -1,0 +1,29 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logs Viewer</title>
+</head>
+<body>
+    <h1>Logs Viewer</h1>
+    <div>
+        <h2>Enter Namespace</h2>
+        <input type="text" id="namespace" placeholder="Namespace">
+        <button onclick="submitNamespace()">Submit</button>
+    </div>
+    <div>
+        <h2>Logs</h2>
+        <pre id="logs"></pre>
+    </div>
+    <script>
+        async function submitNamespace() {
+            const namespace = document.getElementById('namespace').value;
+            const response = await fetch(`http://localhost:5000/logs/?namespace=${namespace}`);
+            const logs = await response.json();
+            document.getElementById('logs').innerText = JSON.stringify(logs, null, 2);
+        }
+    </script>
+</body>
+</html>
